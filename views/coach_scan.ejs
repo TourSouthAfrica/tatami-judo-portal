@@ -1,0 +1,62 @@
+<%- include("layout", { body: `
+  <div class="card">
+    <h1>Coach · Scan Check-in</h1>
+    <p class="muted">Date: ${date}</p>
+
+    <label>Pick session</label>
+    <select id="session">
+      ${sessions.map(s => `
+        <option value="${s.session_id}">${s.name} (${s.start_time}-${s.end_time})</option>
+      `).join("")}
+    </select>
+
+    <div style="margin-top:12px;">
+      <video id="video" style="width:100%; border-radius:12px; border:1px solid #e5e5e5;" autoplay playsinline></video>
+    </div>
+
+    <p id="status" class="muted" style="margin-top:10px;">Waiting for scan…</p>
+
+    <p style="margin-top:12px;">
+      <a href="/coach/classes">Back</a>
+    </p>
+  </div>
+
+  <script src="https://unpkg.com/html5-qrcode"></script>
+  <script>
+    const statusEl = document.getElementById("status");
+    const sessionEl = document.getElementById("session");
+
+    const qr = new Html5Qrcode("video");
+
+    async function start() {
+      const cameras = await Html5Qrcode.getCameras();
+      if (!cameras || cameras.length === 0) {
+        statusEl.textContent = "No camera found.";
+        return;
+      }
+
+      await qr.start(
+        { deviceId: { exact: cameras[0].id } },
+        { fps: 10, qrbox: 250 },
+        async (decodedText) => {
+          statusEl.textContent = "Scanned: " + decodedText + " (checking in...)";
+
+          const res = await fetch("/coach/scan/checkin", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: new URLSearchParams({
+              session_id: sessionEl.value,
+              card_code: decodedText
+            })
+          });
+
+          const data = await res.json();
+          statusEl.textContent = data.ok ? "Checked in!" : ("Error: " + data.error);
+          setTimeout(() => statusEl.textContent = "Waiting for scan…", 1500);
+        }
+      );
+    }
+
+    start().catch(err => { statusEl.textContent = "Camera error: " + err; });
+  </script>
+` }) %>

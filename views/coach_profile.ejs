@@ -1,0 +1,50 @@
+<%- include("layout", { body: `
+  <div class="card">
+    <h1>Member profile</h1>
+
+    <div style="display:flex; gap:16px; align-items:center; margin-top:10px;">
+      <div style="width:72px;height:72px;border-radius:16px;overflow:hidden;border:1px solid #e5e5e5;background:#f6f6f6;display:flex;align-items:center;justify-content:center;">
+        ${member.profile_photo ? `
+          <img src="/uploads/${member.profile_photo}" style="width:100%;height:100%;object-fit:cover;" />
+        ` : `
+          <span style="font-weight:700;">${(member.name || member.email).slice(0,1).toUpperCase()}</span>
+        `}
+      </div>
+
+      <div>
+        <div class="title">${member.name || "No name set"}</div>
+        <div class="muted small">${member.email}</div>
+        <div class="muted small">Role: ${member.role}</div>
+        ${member.card_code ? `<div class="muted small">Card: ${member.card_code}</div>` : ``}
+      </div>
+    </div>
+
+    <h2 style="margin-top:16px;">Stats</h2>
+    <div class="list">
+      <div class="row"><div class="title">Attendance</div><div>${stats.attendanceCount}</div></div>
+      <div class="row"><div class="title">Fight uploads</div><div>${stats.uploadCount}</div></div>
+    </div>
+
+    <a class="btn" href="/coach/profile/${member.id}/attendance">Attendance</a>
+
+
+    <h2 style="margin-top:16px;">Competitions</h2>
+    <div class="list">
+      ${myCompetitions.length ? myCompetitions.map(x => `
+        <div class="row">
+          <div>
+            <div class="title">${x.name}</div>
+            <div class="muted small">
+              ${x.event_date ? `Date: ${x.event_date}` : `Date: —`}
+              ${x.result_place ? ` · Place: ${x.result_place}` : ``}
+            </div>
+          </div>
+        </div>
+      `).join("") : `<p class="muted">No competitions added.</p>`}
+    </div>
+
+    <p style="margin-top:12px;">
+      <a href="/coach/members">Back to members</a>
+    </p>
+  </div>
+` }) %>

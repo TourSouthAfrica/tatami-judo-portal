@@ -1,0 +1,24 @@
+<%- include("layout", { body: `
+  <div class="card">
+    <h1>Scan Check-in</h1>
+    <p class="muted">Show this QR code to your coach to be checked in.</p>
+
+    <div style="margin-top:16px; display:flex; gap:16px; align-items:center; flex-wrap:wrap;">
+      <div style="padding:12px; border:1px solid #e5e5e5; border-radius:16px; background:#fff;">
+        <img src="${qrDataUrl}" style="width:260px; height:260px;" />
+      </div>
+
+      <div>
+        <div class="title">${me.name || me.email}</div>
+        <div class="muted small">Your code: <strong>${payload}</strong></div>
+        <p class="muted" style="margin-top:10px;">
+          You cannot check in yourself. A coach must scan you.
+        </p>
+      </div>
+    </div>
+
+    <p style="margin-top:16px;">
+      <a href="/classes">Back to Classes</a>
+    </p>
+  </div>
+` }) %>

@@ -1,0 +1,35 @@
+<%- include("layout", { body: `
+  <div class="card">
+    <h1>Feedback</h1>
+    <p class="muted">Upload a fight video for coach feedback.</p>
+
+    <form method="post" action="/feedback/upload" enctype="multipart/form-data" class="form">
+      <label>Fight video</label>
+      <input type="file" name="fight_video" accept="video/*" required />
+      <button type="submit">Upload</button>
+    </form>
+
+    <h2 style="margin-top:16px;">Your uploads</h2>
+
+    <div class="list">
+      ${uploads.length ? uploads.map(u => `
+        <div class="row">
+          <div>
+            <div class="title">${u.original_name}</div>
+            <div class="muted small">Status: ${u.status} · ${u.uploaded_at}</div>
+            <form method="post" action="/feedback/delete/${u.id}" style="margin-top:6px;">
+  <button type="submit" style="background:#eee;color:#333;">Delete (test)</button>
+</form>
+
+            <a href="/uploads/${u.file_name}" target="_blank">View</a>
+            ${u.feedback ? `
+              <div class="card" style="margin-top:8px; white-space: pre-wrap;">
+                <strong>Coach feedback:</strong>\n${u.feedback}
+              </div>
+            ` : `<div class="muted small">No feedback yet.</div>`}
+          </div>
+        </div>
+      `).join("") : `<p class="muted">No uploads yet.</p>`}
+    </div>
+  </div>
+` }) %>

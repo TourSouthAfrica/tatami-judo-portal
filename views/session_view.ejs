@@ -1,0 +1,53 @@
+<%- include("layout", { body: `
+  <div class="card">
+    <h1>${session.class_title}</h1>
+    <p class="muted">Date: ${session.session_date}</p>
+
+    <h2 style="margin-top:16px;">Session notes</h2>
+    <div class="card" style="background:#fafafa;">
+      ${notes ? `<div>${notes}</div>` : `<p class="muted">No notes yet.</p>`}
+    </div>
+
+    <h2 style="margin-top:16px;">Coaches attended (${coachAttendees.length})</h2>
+    <div class="list">
+      ${coachAttendees.map(a => `
+        <div class="row">
+          <div style="display:flex; gap:10px; align-items:center;">
+            <div style="width:36px;height:36px;border-radius:10px;overflow:hidden;border:1px solid #e5e5e5;background:#f6f6f6;display:flex;align-items:center;justify-content:center;">
+              ${a.profile_photo
+                ? `<img src="/uploads/${a.profile_photo}" style="width:100%;height:100%;object-fit:cover;" />`
+                : `<span style="font-weight:700;">${(a.name || a.email).slice(0,1).toUpperCase()}</span>`
+              }
+            </div>
+            <div>
+              <div class="title">${a.name || a.email}</div>
+              <div class="muted small">${a.check_in_time || ""}</div>
+            </div>
+          </div>
+        </div>
+      `).join("") || `<p class="muted">No coaches checked in.</p>`}
+    </div>
+
+    <h2 style="margin-top:16px;">Judoka attended (${judokaAttendees.length})</h2>
+    <div class="list">
+      ${judokaAttendees.map(a => `
+        <div class="row">
+          <div style="display:flex; gap:10px; align-items:center;">
+            <div style="width:36px;height:36px;border-radius:10px;overflow:hidden;border:1px solid #e5e5e5;background:#f6f6f6;display:flex;align-items:center;justify-content:center;">
+              ${a.profile_photo
+                ? `<img src="/uploads/${a.profile_photo}" style="width:100%;height:100%;object-fit:cover;" />`
+                : `<span style="font-weight:700;">${(a.name || a.email).slice(0,1).toUpperCase()}</span>`
+              }
+            </div>
+            <div>
+              <div class="title">${a.name || a.email}</div>
+              <div class="muted small">${a.check_in_time || ""}</div>
+            </div>
+          </div>
+        </div>
+      `).join("") || `<p class="muted">No judoka checked in.</p>`}
+    </div>
+
+    <p style="margin-top:12px;"><a href="/profile/attendance">Back to Attendance</a></p>
+  </div>
+` }) %>

@@ -1,0 +1,22 @@
+<%- include("layout", { body: `
+  <div class="card">
+    <h1>Coach · Today (${date})</h1>
+    <p style="margin-top:10px;">
+  <a class="btn" href="/coach/members/new">+ Add Member</a>
+</p>
+
+    <p class="muted">Sessions for today. Open one to manage attendance and notes.</p>
+
+    <div class="list">
+      ${sessions.length ? sessions.map(s => `
+        <div class="row">
+          <div>
+            <div class="title">${s.name}</div>
+            <div class="muted small">${s.start_time} - ${s.end_time}</div>
+          </div>
+          <a class="btn" href="/coach/sessions/${s.session_id}">Open</a>
+        </div>
+      `).join("") : `<p class="muted">No sessions found for today.</p>`}
+    </div>
+  </div>
+` }) %>

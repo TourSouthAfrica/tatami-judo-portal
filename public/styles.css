@@ -1,0 +1,287 @@
+:root{
+  --bg: #07070a;
+  --bg2:#0c0c12;
+  --card:#0f0f17;
+  --card2:#12121c;
+  --text:#f3f3f5;
+  --muted:#b3b3bd;
+
+  --red:#b00020;          /* deep red */
+  --red2:#ff1a3d;         /* glow accent */
+  --border: rgba(255,255,255,.10);
+  --border2: rgba(255,26,61,.25);
+  --shadow: 0 18px 45px rgba(0,0,0,.55);
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  background: radial-gradient(1200px 700px at 15% 10%, rgba(255,26,61,.10), transparent 55%),
+              radial-gradient(1000px 600px at 85% 15%, rgba(176,0,32,.10), transparent 55%),
+              linear-gradient(180deg, var(--bg), var(--bg2));
+  color: var(--text);
+}
+/* Global link styling */
+a {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+a:visited {
+  color: #ffffff;
+}
+
+a:hover {
+  color: #ff1a1a; /* deep red glow effect */
+  text-decoration: none;
+}
+
+a:active {
+  color: #ff1a1a;
+}
+
+
+/* Topbar */
+.topbar{
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display:flex;
+  justify-content: space-between;
+  align-items:center;
+  padding: 12px 16px;
+  background: rgba(10,10,14,.78);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  text-decoration:none;
+}
+.brand-logo {
+  display: block;
+  margin: 0px auto 0px auto;   /* centers horizontally */
+  width: 120px;               /* adjust size if needed */
+  height: auto;
+}
+
+
+
+/* Bigger on login page */
+body.auth .brand-logo {
+  height: 90px;
+}
+
+
+.topbar-actions{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap: wrap;
+}
+
+/* Page container */
+.wrap{
+  max-width: 920px;
+  margin: 22px auto;
+  padding: 0 16px;
+}
+
+/* Cards */
+.card{
+  background: linear-gradient(180deg, rgba(18,18,28,.92), rgba(12,12,18,.92));
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 22px;
+  box-shadow: var(--shadow);
+}
+.card.glow{
+  border-color: var(--border2);
+  box-shadow: 0 0 0 1px rgba(255,26,61,.08) inset, var(--shadow);
+}
+
+/* Typography */
+h1{ margin: 0 0 10px 0; font-size: 24px; letter-spacing: .2px; }
+h2{ margin-top: 18px; font-size: 16px; color: var(--text); }
+.muted{ color: var(--muted); }
+.small{ font-size: 12px; }
+
+/* Forms */
+.form{ display:grid; gap:10px; margin-top: 12px; }
+
+label{ font-size: 12px; color: var(--muted); }
+
+input, select, textarea{
+  width: 100%;
+  padding: 11px 12px;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 12px;
+  background: rgba(0,0,0,.25);
+  color: var(--text);
+  outline: none;
+}
+input::placeholder, textarea::placeholder{ color: rgba(243,243,245,.45); }
+
+input:focus, select:focus, textarea:focus{
+  border-color: rgba(255,26,61,.45);
+  box-shadow: 0 0 0 4px rgba(255,26,61,.12);
+}
+
+textarea{
+  resize: vertical;
+  font-family: inherit;
+}
+
+.error{
+  color: #ff5a74;
+  margin: 8px 0;
+}
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  padding: 10px 12px;
+  border-radius: 10px;
+  text-decoration: none;
+  border: 1px solid #d9d9d9;
+  color: #fff;
+  font-weight: 600;
+}
+
+.btn:hover {
+  border-color: #8b0000;
+  box-shadow: 0 0 8px rgba(255, 0, 0, 0.4);
+}
+
+.btn:active{ transform: translateY(1px); }
+
+.btn-primary{
+  border-color: rgba(255,26,61,.45);
+  background: linear-gradient(180deg, rgba(255,26,61,.20), rgba(176,0,32,.20));
+  box-shadow: 0 0 0 1px rgba(255,26,61,.12) inset;
+}
+
+.btn-ghost{
+  background: rgba(255,255,255,.03);
+}
+
+.linkbtn{
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  text-decoration: underline;
+  color: var(--muted);
+}
+
+/* Primary action buttons (Signup, Login, etc.) */
+.btn-primary {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  border: none;
+
+  background: linear-gradient(135deg, #8b0000, #b30000);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* Hover effect */
+.btn-primary:hover {
+  background: linear-gradient(135deg, #a00000, #ff0000);
+  box-shadow: 0 0 12px rgba(255, 0, 0, 0.5);
+  transform: translateY(-1px);
+}
+
+/* Click effect */
+.btn-primary:active {
+  transform: translateY(0);
+  box-shadow: 0 0 6px rgba(255, 0, 0, 0.4);
+}
+
+
+/* Lists */
+.list{ display:grid; gap:10px; margin-top: 12px; }
+.row{
+  display:flex;
+  justify-content: space-between;
+  align-items:center;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: 14px;
+  background: rgba(255,255,255,.03);
+  flex-wrap: wrap;
+}
+.title{ font-weight: 750; }
+
+/* Tiles / home grid */
+.grid{
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 14px;
+}
+.tile{
+  padding: 14px;
+  border: 1px dashed rgba(255,26,61,.25);
+  border-radius: 16px;
+  background: rgba(255,255,255,.03);
+}
+.tile:hover{
+  border-color: rgba(255,26,61,.45);
+  box-shadow: 0 0 0 4px rgba(255,26,61,.08);
+}
+
+/* Mobile */
+@media (max-width: 720px){
+  .grid{ grid-template-columns: 1fr; }
+  .wrap{ margin: 14px auto; }
+}
+@media (max-width: 520px){
+  .topbar{ flex-direction: column; align-items: stretch; gap: 10px; }
+  .topbar-actions{ justify-content:flex-start; }
+}
+
+/* =========================
+   LOGIN HEXAGON BACKGROUND
+   ========================= */
+
+/* Add class "page-login" to body for login page only */
+.page-login{
+  background:
+    radial-gradient(900px 600px at 50% 20%, rgba(255,26,61,.22), transparent 60%),
+    linear-gradient(180deg, #050509, #0a0a12);
+}
+
+/* Hexagon SVG pattern with red glow outline */
+.page-login::before{
+  content:"";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  opacity: .95;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='140' viewBox='0 0 160 140'%3E%3Cdefs%3E%3Cfilter id='g' x='-50%25' y='-50%25' width='200%25' height='200%25'%3E%3CfeGaussianBlur stdDeviation='2.2' result='b'/%3E%3CfeMerge%3E%3CfeMergeNode in='b'/%3E%3CfeMergeNode in='SourceGraphic'/%3E%3C/feMerge%3E%3C/filter%3E%3C/defs%3E%3Cg fill='%2307070a'%3E%3Cpath d='M40 10 L70 26 L70 58 L40 74 L10 58 L10 26 Z'/%3E%3Cpath d='M120 10 L150 26 L150 58 L120 74 L90 58 L90 26 Z'/%3E%3Cpath d='M80 68 L110 84 L110 116 L80 132 L50 116 L50 84 Z'/%3E%3C/g%3E%3Cg filter='url(%23g)' fill='none' stroke='%23ff1a3d' stroke-opacity='.55' stroke-width='1.6'%3E%3Cpath d='M40 10 L70 26 L70 58 L40 74 L10 58 L10 26 Z'/%3E%3Cpath d='M120 10 L150 26 L150 58 L120 74 L90 58 L90 26 Z'/%3E%3Cpath d='M80 68 L110 84 L110 116 L80 132 L50 116 L50 84 Z'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 220px 190px;
+  background-repeat: repeat;
+  background-position: center;
+}
+
+/* Make login card pop */
+.login-shell{
+  min-height: calc(100vh - 90px);
+  display: grid;
+  place-items: center;
+  padding: 18px 0;
+}

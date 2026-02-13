@@ -1,0 +1,21 @@
+<%- include("layout", { body: `
+  <div class="card">
+    <h1>Classes</h1>
+    <p class="muted">Weekly schedule. Tap a class to open today's session and check in.</p>
+    <a href="/scan-checkin">Scan Check-in</a>
+    <div class="list">
+      ${classes.map(c => `
+        <div class="row">
+          <div>
+            <div class="title">${c.name}</div>
+            <div class="muted small">
+              Day ${c.day_of_week} · ${c.start_time} - ${c.end_time}
+            </div>
+          </div>
+          <a class="btn" href="/classes/${c.id}/today">Open today</a>
+        </div>
+      `).join("")}
+    </div>
+  </div>
+` }) %>
+

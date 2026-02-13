@@ -1,0 +1,17 @@
+<%- include("layout", { body: `
+  <div class="card">
+    <h1>Judoka Home</h1>
+    <p class="muted">Card code: <strong>${user?.card_code || "Not set"}</strong></p>
+    <p class="muted">Welcome, ${user?.name || user?.email}.</p>
+
+    <h2>News</h2>
+    <p>This is the MVP homepage. Next we add: Classes + Register + Session comments + Feedback uploads.</p>
+
+    <div class="grid">
+      <div class="tile"><a href="/profile">Profile</a></div>
+      <div class="tile"><a href="/classes">Classes</a></div>
+      <div class="tile"><a href="/feedback">Feedback</a>
+</div>
+    </div>
+  </div>
+` }) %>

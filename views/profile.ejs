@@ -1,0 +1,80 @@
+<%- include("layout", { body: `
+  <div class="card">
+    <h1>Profile</h1>
+
+    <div style="display:flex; gap:16px; align-items:center; margin-top:10px;">
+      <div style="width:72px;height:72px;border-radius:16px;overflow:hidden;border:1px solid #e5e5e5;background:#f6f6f6;display:flex;align-items:center;justify-content:center;">
+        ${me.profile_photo ? `
+          <img src="/uploads/${me.profile_photo}" style="width:100%;height:100%;object-fit:cover;" />
+        ` : `
+          <span style="font-weight:700;">${(me.name || me.email).slice(0,1).toUpperCase()}</span>
+        `}
+      </div>
+
+      <div>
+        <div class="title">${me.name || "No name set"}</div>
+        <div class="muted small">${me.email}</div>
+        <div class="muted small">Role: ${me.role}</div>
+        ${me.card_code ? `<div class="muted small">Card: ${me.card_code}</div>` : ``}
+      </div>
+    </div>
+
+    <h2 style="margin-top:16px;">Upload profile photo</h2>
+    <form method="post" action="/profile/photo" enctype="multipart/form-data" class="form">
+      <input type="file" name="profile_photo" accept="image/*" required />
+      <button type="submit" class="btn-primary">Upload</button>
+
+    </form>
+
+    <h2 style="margin-top:16px;">Stats</h2>
+    <div class="list">
+      <div class="row"><div class="title">Attendance</div><div>${stats.attendanceCount}</div></div>
+      <div class="row"><div class="title">Fight uploads</div><div>${stats.uploadCount}</div></div>
+    </div>
+
+    <a class="btn" href="/profile/attendance">Attendance</a>
+    
+
+
+    ${me.role === "judoka" ? `
+      <h2 style="margin-top:16px;">Add competition</h2>
+      <form method="post" action="/profile/competition" class="form">
+        <label>Competition</label>
+        <select name="competition_id" required>
+          ${competitions.map(c => `<option value="${c.id}">${c.name}</option>`).join("")}
+        </select>
+
+        <label>Place</label>
+        <input type="text" name="result_place" placeholder="e.g. 1st / 2nd / Gold" />
+
+        <label>Date</label>
+        <input type="date" name="event_date" />
+
+        <button type="submit">Save</button>
+      </form>
+
+      <h2 style="margin-top:16px;">My competitions</h2>
+      <div class="list">
+        ${myCompetitions && myCompetitions.length ? myCompetitions.map(c => `
+          <div class="row" style="align-items:flex-start;">
+            <div>
+              <div class="title">${c.name}</div>
+              <div class="muted small">
+                ${c.event_date ? `Date: ${c.event_date}` : `Date: —`}
+                ${c.result_place ? ` · Place: ${c.result_place}` : ``}
+              </div>
+            </div>
+
+            <form method="post" action="/profile/competition/${c.user_competition_id}/delete" style="margin:0;">
+              <button type="submit" style="background:#eee;color:#333;">Delete</button>
+            </form>
+          </div>
+        `).join("") : `<p class="muted">No competitions added yet.</p>`}
+      </div>
+    ` : ``}
+
+    <p style="margin-top:12px;">
+      <a href="/home">Back to Home</a>
+    </p>
+  </div>
+` }) %>

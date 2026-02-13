@@ -1,0 +1,20 @@
+<%- include("layout", { body: `
+  <div class="card">
+    <h1>${member.name || member.email}</h1>
+    <p class="muted">Attendance history</p>
+
+    <div class="list">
+      ${attended.length ? attended.map(s => `
+        <div class="row">
+          <div>
+            <div class="title">${s.class_title}</div>
+            <div class="muted small">Date: ${s.session_date}</div>
+          </div>
+          <a class="btn" href="/coach/sessions/${s.session_id}">Open</a>
+        </div>
+      `).join("") : `<p class="muted">No attendance recorded yet.</p>`}
+    </div>
+
+    <p style="margin-top:12px;"><a href="/coach/profile/${member.id}">Back to Profile</a></p>
+  </div>
+` }) %>

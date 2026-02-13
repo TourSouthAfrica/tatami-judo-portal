@@ -1,0 +1,88 @@
+<%- include("layout", { body: `
+<div class="card">
+  <h1>QR Scanner</h1>
+  <p class="muted">
+    ${session.class_name} · ${session.session_date}  
+    (${session.start_time} - ${session.end_time})
+  </p>
+
+  <div id="preview" style="width:100%; max-width:400px; border-radius:8px; overflow:hidden;"></div>
+
+
+  <p id="status" class="muted" style="margin-top:10px;">
+    Camera starting...
+  </p>
+
+  <div style="margin-top:15px;">
+    <a class="btn" href="/coach/sessions/${session.session_id}">Back to Session</a>
+  </div>
+</div>
+
+<script src="https://unpkg.com/html5-qrcode"></script>
+<script>
+const sessionId = ${session.session_id};
+const statusEl = document.getElementById("status");
+
+let lastScan = null;
+let lastScanTime = 0;
+
+// Prevent rapid duplicate scans
+function isDuplicate(code) {
+  const now = Date.now();
+  if (code === lastScan && now - lastScanTime < 2000) {
+    return true;
+  }
+  lastScan = code;
+  lastScanTime = now;
+  return false;
+}
+
+async function submitScan(code) {
+  statusEl.textContent = "Saving check-in...";
+
+  try {
+    const res = await fetch("/coach/sessions/" + sessionId + "/scan", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({ code })
+    });
+
+    const data = await res.json().catch(() => null);
+
+    if (!res.ok || !data || !data.ok) {
+      statusEl.textContent = (data && data.error) ? data.error : "Scan failed";
+      return;
+    }
+
+    statusEl.textContent = "✅ Checked in: " + (data.name || "Member");
+
+  } catch (e) {
+    statusEl.textContent = "Network error while saving scan.";
+  }
+}
+
+// Start scanner
+const scanner = new Html5Qrcode("preview");
+
+Html5Qrcode.getCameras().then(cameras => {
+  if (!cameras || !cameras.length) {
+    statusEl.textContent = "No camera found";
+    return;
+  }
+
+  const cameraId = cameras[0].id;
+
+  scanner.start(
+    cameraId,
+    { fps: 10, qrbox: 250 },
+    decodedText => {
+      if (isDuplicate(decodedText)) return;
+      submitScan(decodedText);
+    },
+    error => {}
+  );
+
+  statusEl.textContent = "Ready — scan QR codes";
+});
+</script>
+` }) %>

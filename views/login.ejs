@@ -1,0 +1,29 @@
+<%- include("layout", { pageClass: "page-login", body: `
+  <div class="login-shell">
+    <div class="card glow" style="max-width:420px; width:100%;">
+      <div style="text-align:center; margin-bottom:20px;">
+  <img src="/logo2.png" class="brand-logo" />
+</div>
+
+
+      <h1 style="text-align:center; margin-bottom:6px;">Welcome back</h1>
+      <p class="muted" style="text-align:center; margin-top:0;">Log in to continue</p>
+
+      ${error ? `<div class="error">${error}</div>` : ``}
+
+      <form method="post" action="/login" class="form">
+        <label>Email</label>
+        <input name="email" type="email" placeholder="you@example.com" required />
+
+        <label>Password</label>
+        <input name="password" type="password" placeholder="••••••••" required />
+
+        <button class="btn btn-primary" type="submit">Login</button>
+      </form>
+
+      <div style="margin-top:12px; text-align:center;">
+        <a class="btn btn-ghost" href="/signup" style="width:100%;">Create account</a>
+      </div>
+    </div>
+  </div>
+` }) %>

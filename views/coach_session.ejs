@@ -1,0 +1,68 @@
+<%- include("layout", { body: `
+  <div class="card">
+    <h1>${session?.name || "Session"}</h1>
+    <p class="muted">${session?.session_date || ""} ${session?.start_time ? "· " + session.start_time : ""}${session?.end_time ? " - " + session.end_time : ""}</p>
+
+    <div style="display:flex; gap:8px; margin-top:12px;">
+      <a class="btn" href="/coach/classes">Back</a>
+      <a class="btn" href="/coach/sessions/${session?.session_id || session?.id}/scanner">Scanner</a>
+    </div>
+
+    <h2 style="margin-top:16px;">Judoka attended</h2>
+    <div class="list">
+      ${
+        (typeof judokaAttendees !== "undefined" && judokaAttendees.length)
+          ? judokaAttendees.map(a =>
+              '<div class="row">' +
+                '<div>' +
+                  '<div class="title">' + (a.name || a.email) + '</div>' +
+                  '<div class="muted small">' + (a.check_in_time || "") + ' · ' + (a.method || "") + '</div>' +
+                '</div>' +
+              '</div>'
+            ).join("")
+          : (typeof attendees !== "undefined" && attendees.length)
+              ? attendees.map(a =>
+                  '<div class="row">' +
+                    '<div>' +
+                      '<div class="title">' + (a.name || a.email) + '</div>' +
+                      '<div class="muted small">' + (a.check_in_time || "") + ' · ' + (a.method || "") + '</div>' +
+                    '</div>' +
+                  '</div>'
+                ).join("")
+              : '<p class="muted">No one checked in yet.</p>'
+      }
+    </div>
+
+    <h2 style="margin-top:16px;">Coaches attended</h2>
+    <div class="list">
+      ${
+        (typeof coachAttendees !== "undefined" && coachAttendees.length)
+          ? coachAttendees.map(a =>
+              '<div class="row">' +
+                '<div>' +
+                  '<div class="title">' + (a.name || a.email) + '</div>' +
+                  '<div class="muted small">' + (a.check_in_time || "") + ' · ' + (a.method || "") + '</div>' +
+                '</div>' +
+              '</div>'
+            ).join("")
+          : '<p class="muted">No coaches checked in yet.</p>'
+      }
+    </div>
+
+    <h2 style="margin-top:16px;">Manual check-in (forgot QR)</h2>
+<form method="post" action="/coach/sessions/${session.session_id || session.id}/add-judoka" class="form">
+  <label>Select judoka</label>
+  <select name="user_id" required>
+    ${(judoka || []).map(j => `<option value="${j.id}">${j.name || j.email}</option>`).join("")}
+  </select>
+  <button type="submit">Add attendance</button>
+</form>
+
+
+    <h2 style="margin-top:16px;">Session notes</h2>
+    <form method="post" action="/coach/sessions/${session?.session_id || session?.id}/notes" class="form">
+      <textarea name="notes" rows="4" placeholder="What was done in this session...">${notes || ""}</textarea>
+      <button type="submit">Save notes</button>
+    </form>
+  </div>
+` }) %>

@@ -1,0 +1,16 @@
+<%- include("layout", { body: `
+  <div class="card">
+    <h1>Coach Portal</h1>
+    <p class="muted">Welcome, ${user?.name || user?.email}.</p>
+
+    <p>This is the coach-only area. Next we add: session creation, attendance list, manual edits, feedback queue.</p>
+
+    <div class="grid">
+      <div class="tile"><a href="/coach/classes">Today’s Sessions</a></div>
+      <div class="tile"><a href="/coach/feedback">Feedback Inbox</a></div>
+      <div class="tile"><a href="/profile">My Profile</a></div>
+      <div class="tile"><a href="/coach/members">Members</a></div>
+
+    </div>
+  </div>
+` }) %>

@@ -1,0 +1,27 @@
+<%- include("layout", { body: `
+  <div class="card">
+    <h1>Create account</h1>
+
+    ${error ? `<p style="color:#b00020; margin:8px 0;">${error}</p>` : ``}
+
+    <form method="post" action="/signup" class="form" style="margin-top:12px;">
+      <label>Name (optional)</label>
+      <input type="text" name="name" placeholder="e.g. John Smith" />
+
+      <label>Email</label>
+      <input type="email" name="email" required placeholder="you@email.com" />
+
+      <label>Password</label>
+      <input type="password" name="password" required />
+
+      <label>JSA Number</label>
+      <input type="text" name="jsa_number" required placeholder="e.g. JSA-12345" />
+
+      <button type="submit" class="btn-primary">Create Account</button>
+    </form>
+
+    <p style="margin-top:12px;" class="muted">
+      Already have an account? <a href="/login">Log in</a>
+    </p>
+  </div>
+` }) %>

@@ -1,0 +1,27 @@
+<%- include("layout", { body: `
+  <div class="card">
+    <h1>Add Member</h1>
+
+    ${error ? `<p style="color:#b00020; margin:8px 0;">${error}</p>` : ``}
+
+    <form method="post" action="/coach/members/new" class="form" style="margin-top:12px;">
+      <label>Full name</label>
+      <input type="text" name="name" required placeholder="e.g. James Tanner" />
+
+      <label>Role</label>
+      <select name="role" required>
+        <option value="judoka">Judoka</option>
+        <option value="coach">Coach</option>
+      </select>
+
+      <label>JSA number (optional)</label>
+      <input type="text" name="jsa_number" placeholder="If you already know it" />
+
+      <button type="submit">Create member</button>
+    </form>
+
+    <p style="margin-top:12px;">
+      <a href="/coach/classes">Back to Coach Classes</a>
+    </p>
+  </div>
+` }) %>
